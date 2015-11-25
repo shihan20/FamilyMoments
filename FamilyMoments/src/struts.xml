@@ -20,9 +20,13 @@
 			<exception-mapping exception="java.lang.Exception"
 				result="error" />
 		</global-exception-mappings>
-
-		<action name="*">
-			<result>/WEB-INF/content/{1}.jsp</result>
+		
+		<action name="index">
+			<result>/WEB-INF/content/index.jsp</result>
+		</action>
+		
+		<action name="UpdateTextAction" class="updateTextAction">
+			<result name="success">/WEB-INF/content/index.jsp</result>
 		</action>
 
 	</package>

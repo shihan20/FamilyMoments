@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
@@ -32,14 +32,10 @@
                                     <img src="img/photo.jpg" alt="Responsive image" class="img-circle img-responsive">
                                 </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10">
-                                <s:form>
-                                    <s:textarea name="states" class="form-control" placeholder="分享新鲜事"></s:textarea>
+                                <s:form action="UpdateTextAction">
+                                    <s:textarea name="text" class="form-control" placeholder="分享新鲜事"></s:textarea>
+                                    <input type="submit" value="发布"  class="btn btn-primary"/>
                                 </s:form>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-2 col-xs-offset-10">
-                                    <button type="button" class="btn btn-primary">发布</button>
                                 </div>
                             </div>
                         </div>

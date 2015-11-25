@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
@@ -11,12 +12,18 @@
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 	
-	<bean id="postsService" class="service.PostsService"
-		p:commentDao-ref="commonDao"
+	<import resource="daoContext.xml" />
+	
+	<bean id="postsService" class="service.impl.PostsServiceImpl"
+		p:commentDao-ref="commentDao"
 		p:contentDao-ref="contentDao"
 		p:imgContentDao-ref="imgContentDao"
 		p:postDao-ref="postDao"
 		p:userDao-ref="userDao"
-		p:videoContextDao="videoContextDao"/>
+		p:videoContentDao-ref="videoContentDao"
+		p:sessionFactory-ref="sessionFactory"/>
 		
+	<bean id="updateTextAction" class="action.UpdateTextAction" scope="prototype"
+		p:postsService-ref="postsService" />
+
 </beans>

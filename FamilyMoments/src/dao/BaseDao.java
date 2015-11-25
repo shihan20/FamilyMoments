@@ -18,7 +18,7 @@ public interface BaseDao<T>
 	// 根据ID加载实体
 	T get(Class<T> entityClazz , Serializable id);
 	// 保存实体
-	Serializable save(T entity);
+	void save(T entity);
 	// 更新实体
 	void update(T entity);
 	// 删除实体

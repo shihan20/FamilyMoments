@@ -1,6 +1,7 @@
 package dao.impl;
 
 import org.hibernate.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import dao.*;
  * @author Yeeku.H.Lee kongyeeku@163.com
  * @version 1.0
  */
+@Transactional
 public class BaseDaoImpl<T> implements BaseDao<T>
 {
 	// DAO组件进行持久化操作底层依赖的SessionFactory组件
@@ -34,14 +36,17 @@ public class BaseDaoImpl<T> implements BaseDao<T>
 	@SuppressWarnings("unchecked")
 	public T get(Class<T> entityClazz , Serializable id)
 	{
-		return (T)getSessionFactory().getCurrentSession()
-			.get(entityClazz , id);
+		Transaction tx = getSessionFactory().getCurrentSession().beginTransaction();
+		T a = (T)getSessionFactory().getCurrentSession().get(entityClazz , id);
+		tx.commit();
+		return a;
 	}
 	// 保存实体
-	public Serializable save(T entity)
+	public void save(T entity)
 	{
-		return getSessionFactory().getCurrentSession()
-			.save(entity);
+		Transaction tx = getSessionFactory().getCurrentSession().beginTransaction();
+		getSessionFactory().getCurrentSession().save(entity);
+		tx.commit();
 	}
 	// 更新实体
 	public void update(T entity)
