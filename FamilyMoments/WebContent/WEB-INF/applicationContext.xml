@@ -20,10 +20,21 @@
 		p:imgContentDao-ref="imgContentDao"
 		p:postDao-ref="postDao"
 		p:userDao-ref="userDao"
-		p:videoContentDao-ref="videoContentDao"
-		p:sessionFactory-ref="sessionFactory"/>
+		p:videoContentDao-ref="videoContentDao"/>
 		
 	<bean id="updateTextAction" class="action.UpdateTextAction" scope="prototype"
+		p:postsService-ref="postsService" />
+		
+	<bean id="getTimelineAction" class="action.GetTimelineAction" scope="prototype"
+		p:postsService-ref="postsService" />
+		
+	<bean class="TestListener"
+		p:commentDao-ref="commentDao"
+		p:contentDao-ref="contentDao"
+		p:imgContentDao-ref="imgContentDao"
+		p:postDao-ref="postDao"
+		p:userDao-ref="userDao"
+		p:videoContentDao-ref="videoContentDao"
 		p:postsService-ref="postsService" />
 
 </beans>

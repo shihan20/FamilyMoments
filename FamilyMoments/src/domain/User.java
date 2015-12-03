@@ -1,4 +1,5 @@
 package domain;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -14,7 +15,11 @@ public class User {
 	@OneToMany(targetEntity=Comment.class, mappedBy="at")
 	private Set<Comment> ateds;
 	private String name;
-	
+	@ManyToMany(targetEntity=User.class)
+	@JoinTable(name="user_friends",
+			joinColumns=@JoinColumn(name="user_id", referencedColumnName="user_id"),
+			inverseJoinColumns=@JoinColumn(name="friends_id", referencedColumnName="user_id"))
+	private Set<User> friends = new HashSet<>();
 	public void setId(Integer id){
 		this.id = id;
 	}
@@ -45,5 +50,13 @@ public class User {
 
 	public void setAteds(Set<Comment> ateds) {
 		this.ateds = ateds;
+	}
+
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
 	}
 }

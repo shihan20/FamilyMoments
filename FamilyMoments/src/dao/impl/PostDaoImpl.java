@@ -1,10 +1,28 @@
 package dao.impl;
 
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.Set;
 
+import org.hibernate.*;
+import org.springframework.transaction.annotation.Transactional;
 import dao.PostDao;
-import domain.Post;
+import domain.*;
+
 @Transactional
 public class PostDaoImpl extends BaseDaoImpl<Post> implements PostDao{
-
+	public List<Post> getUsersPosts(Set<User> users, int firstResult, int maxResults) {
+		Session sess = getSessionFactory().getCurrentSession();
+		Transaction tx = sess.beginTransaction();
+		String hql = "select p "
+				+ "from Post p "
+				+ "where p.publisher in :users "
+				+ "order by p.id desc";
+		Query query = sess.createQuery(hql);
+		query.setParameterList("users", users);
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResults);
+		List<Post> list = query.list();
+		tx.commit();
+		return list;
+	}
 }

@@ -51,21 +51,27 @@ public class BaseDaoImpl<T> implements BaseDao<T>
 	// 更新实体
 	public void update(T entity)
 	{
+		Transaction tx = getSessionFactory().getCurrentSession().beginTransaction();
 		getSessionFactory().getCurrentSession().saveOrUpdate(entity);
+		tx.commit();
 	}
 	// 删除实体
 	public void delete(T entity)
 	{
+		Transaction tx = getSessionFactory().getCurrentSession().beginTransaction();
 		getSessionFactory().getCurrentSession().delete(entity);
+		tx.commit();
 	}
 	// 根据ID删除实体
 	public void delete(Class<T> entityClazz , Serializable id)
 	{
+		Transaction tx = getSessionFactory().getCurrentSession().beginTransaction();
 		getSessionFactory().getCurrentSession()
 			.createQuery("delete " + entityClazz.getSimpleName()
 				+ " en where en.id = ?0")
 			.setParameter("0" , id)
 			.executeUpdate();
+		tx.commit();
 	}
 	// 获取所有实体
 	public List<T> findAll(Class<T> entityClazz)

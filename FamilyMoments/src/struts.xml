@@ -8,7 +8,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 	<constant name="struts.devMode" value="true" />
 
-	<package name="default" namespace="/" extends="struts-default">
+	<package name="default" namespace="/" extends="json-default">
 
 		<default-action-ref name="index" />
 
@@ -27,6 +27,12 @@
 		
 		<action name="UpdateTextAction" class="updateTextAction">
 			<result name="success">/WEB-INF/content/index.jsp</result>
+		</action>
+		
+		<action name="GetTimelineAction" class="getTimelineAction">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
 		</action>
 
 	</package>

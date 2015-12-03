@@ -9,14 +9,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/bootstrap.css" rel="stylesheet">
         <script src="js/jquery-1.11.3.min.js"></script>    
+        <script src="js/generatePost.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+        	$.getJSON("/FamilyMoments/GetTimelineAction", function(result){
+        		generate(result);
+        	});
+        });
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Insert title here</title>
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-sm-12 col-xs-12">
+                <div id="posts" class="col-md-6 col-sm-12 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row" style="padding:5px">
@@ -40,7 +48,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
+                    <div id="post" class="panel panel-default">
                         <div class="panel-body">
                             <div class="row" style="padding:5px">
                                 <div class="col-xs-2">

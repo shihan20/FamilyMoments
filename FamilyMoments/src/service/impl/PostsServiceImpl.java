@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -19,17 +20,7 @@ public class PostsServiceImpl implements PostsService{
 	private PostDao postDao;
 	private UserDao userDao;
 	private VideoContentDao videoContentDao;
-	private SessionFactory sessionFactory;
-	// 依赖注入SessionFactory所需的setter方法
-	public void setSessionFactory(SessionFactory sessionFactory)
-	{
-		this.sessionFactory = sessionFactory;
-	}
-	public SessionFactory getSessionFactory()
-	{
-		return this.sessionFactory;
-	}
-	
+
 	public void setCommentDao(CommentDao commentDao) {
 		this.commentDao = commentDao;
 	}
@@ -47,6 +38,11 @@ public class PostsServiceImpl implements PostsService{
 	}
 	public void setVideoContentDao(VideoContentDao videoContentDao) {
 		this.videoContentDao = videoContentDao;
+	}
+	
+	public List<Post> getTimeline(int userid, int firstResult, int maxResults) {
+		//System.out.println(userDao.get(User.class, 1).getName());
+		return postDao.getUsersPosts(userDao.get(User.class, userid).getFriends(), firstResult, maxResults);
 	}
 	
 	public void updateTextPost(String text, int userid) {
