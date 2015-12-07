@@ -12,11 +12,34 @@
         <script src="js/generatePost.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script type="text/javascript">
+        var currPage = 0;
+        var flag = 0;
         $(document).ready(function(){
-        	$.getJSON("/FamilyMoments/GetTimelineAction", function(result){
+        	$.getJSON("/FamilyMoments/GetTimelineAction?page="+currPage.toString(), function(result){
         		generate(result);
         	});
+        	currPage++;
         });
+        $(function(){
+        	  $(window).scroll(function() {
+        		  //当内容滚动到底部时加载新的内容
+        		  if ($(this).scrollTop() + $(window).height() + 20 >= $(document).height() && $(this).scrollTop() > 20) {
+        			  //当前要加载的页码
+        			  if (flag == 1)
+        				  return;
+        			  loadPage(currPage);
+        			  currPage++;
+        		  }
+        	  });
+        });
+        function loadPage(currPage) {
+        	$.getJSON("/FamilyMoments/GetTimelineAction?page="+currPage.toString(), function(result){
+        		var json = JSON.parse(result);
+        		if (json.length<10)
+        			flag=1;
+        		generate(result);
+        	});
+        }
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Insert title here</title>
@@ -47,142 +70,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="post" class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row" style="padding:5px">
-                                <div class="col-xs-2">
-                                    <img src="img/photo.jpg" alt="Responsive image" class="img-circle img-responsive">
-                                </div>
-                                <div class="col-xs-10">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            施涵
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            12 mins ago
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px 5px 0px 5px">
-                                <div class="col-xs-12">
-                                    test
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                                <div class="col-xs-12">
-                                    <img src="img/share_photo.jpg" alt="Responsive image" class="img-responsive">
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                                <div class="col-xs-2">
-                                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="border:0px">
-                                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                                        赞
-                                    </button>
-                                </div>
-                                <div class="col-xs-2">
-                                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="border:0px">
-                                        <span class="glyphicon glyphicon-comment"></span>
-                                        评论
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12" style="border:1px solid #eee;">
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                            	<div class="col-xs-12">
-                            		崔勇带 赞了
-                            	</div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                            	<div class="col-xs-12">
-                            		<div class="row">
-                            			<div class="col-xs-12">
-                            				崔勇带：哈哈哈哈
-                            			</div>
-                            		</div>
-                            		<div class="row">
-                            			<div class="col-xs-12">
-                            				施涵 @ 崔勇带：傻逼
-                            			</div>
-                            		</div>
-                            	</div>
-                            </div>
-                         </div>
-                    </div>
-                                       <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row" style="padding:5px">
-                                <div class="col-xs-2">
-                                    <img src="img/photo.jpg" alt="Responsive image" class="img-circle img-responsive">
-                                </div>
-                                <div class="col-xs-10">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            施涵
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            12 mins ago
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px 5px 0px 5px">
-                                <div class="col-xs-12">
-                                    test
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                                <div class="col-xs-12">
-                                    <img src="img/share_photo.jpg" alt="Responsive image" class="img-responsive">
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                                <div class="col-xs-2">
-                                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="border:0px">
-                                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                                        赞
-                                    </button>
-                                </div>
-                                <div class="col-xs-2">
-                                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" style="border:0px">
-                                        <span class="glyphicon glyphicon-comment"></span>
-                                        评论
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12" style="border:1px solid #eee;">
-                                </div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                            	<div class="col-xs-12">
-                            		崔勇带 赞了
-                            	</div>
-                            </div>
-                            <div class="row" style="padding:5px">
-                            	<div class="col-xs-12">
-                            		<div class="row">
-                            			<div class="col-xs-12">
-                            				崔勇带：哈哈哈哈
-                            			</div>
-                            		</div>
-                            		<div class="row">
-                            			<div class="col-xs-12">
-                            				施涵 @ 崔勇带：😪
-                            			</div>
-                            		</div>
-                            	</div>
-                            </div>
-                         </div>
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@
 		</action>
 		
 		<action name="UpdateTextAction" class="updateTextAction">
-			<result name="success">/WEB-INF/content/index.jsp</result>
+			<result name="success" type="redirect">/</result>
 		</action>
 		
 		<action name="GetTimelineAction" class="getTimelineAction">

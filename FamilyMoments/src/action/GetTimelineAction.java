@@ -4,13 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Post;
 import service.PostsService;
+
+import org.apache.struts2.ServletActionContext;
 import org.json.*;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 
 public class GetTimelineAction implements Action{
 	private PostsService postsService;
@@ -29,7 +33,12 @@ public class GetTimelineAction implements Action{
 	}
 	
 	public String execute() throws Exception {
-		List<Post> posts = postsService.getTimeline(1, 0, 10);
+		ActionContext context = ActionContext.getContext();
+		HttpServletRequest request = (HttpServletRequest) context
+                .get(ServletActionContext.HTTP_REQUEST);
+		String page = request.getParameter("page");
+		int currPage = Integer.parseInt(page);
+		List<Post> posts = postsService.getTimeline(1, 10*currPage, 10);
 		JSONArray jsonArray = new JSONArray();
 		for (Post post : posts) {
 			Map map = new HashMap();

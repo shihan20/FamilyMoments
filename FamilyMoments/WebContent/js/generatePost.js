@@ -25,48 +25,23 @@ function generate(json) {
                             </div>\
                             <div class=\"row\" style=\"padding:5px 5px 0px 5px\">\
                                 <div class=\"col-xs-12\">" +
-                                    post.text;
-                                "</div>\
-                            </div>\
-                            <div class=\"row\" style=\"padding:5px\">\
-                                <div class=\"col-xs-2\">\
-                                    <button type=\"button\" class=\"btn btn-default btn-sm\" aria-label=\"Left Align\" style=\"border:0px\">\
-                                        <span class=\"glyphicon glyphicon-thumbs-up\"></span>\
-                                        赞\
-                                    </button>\
-                                </div>\
-                                <div class=\"col-xs-2\">\
-                                    <button type=\"button\" class=\"btn btn-default btn-sm\" aria-label=\"Left Align\" style=\"border:0px\">\
-                                        <span class=\"glyphicon glyphicon-comment\"></span>\
-                                        评论\
-                                    </button>\
-                                </div>\
-                            </div>\
-                            <div class=\"row\">\
-                                <div class=\"col-xs-12\" style=\"border:1px solid #eee;\">\
-                                </div>\
-                            </div>\
-                            <div class=\"row\" style=\"padding:5px\">\
-                            	<div class=\"col-xs-12\">\
-                            		崔勇带 赞了\
-                            	</div>\
-                            </div>\
-                            <div class=\"row\" style=\"padding:5px\">\
-                            	<div class=\"col-xs-12\">\
-                            		<div class=\"row\">\
-                            			<div class=\"col-xs-12\">\
-                            				崔勇带：哈哈哈哈\
-                            			</div>\
-                            		</div>\
-                            		<div class=\"row\">\
-                            			<div class=\"col-xs-12\">\
-                            				施涵 @ 崔勇带：傻逼\
-                            			</div>\
-                            		</div>\
-                            	</div>\
-                            </div>\
-                         </div>\
-                    </div>"
+                                    post.text +
+                                    "</div>\
+                                    </div>\
+                                    <div class=\"row\" style=\"padding:5px\">\
+                                        <div class=\"col-xs-2\">\
+                                            <button type=\"button\" class=\"btn btn-default btn-sm\" aria-label=\"Left Align\" style=\"border:0px\">\
+                                                <span class=\"glyphicon glyphicon-thumbs-up\"></span>\
+                                                赞\
+                                            </button>\
+                                        </div>\
+                                        <div class=\"col-xs-2\">\
+                                            <button type=\"button\" class=\"btn btn-default btn-sm\" aria-label=\"Left Align\" style=\"border:0px\">\
+                                                <span class=\"glyphicon glyphicon-comment\"></span>\
+                                                评论\
+                                            </button>\
+                                        </div>\
+                                    </div>"
 	$("#posts").append(html);
 	}
 }
