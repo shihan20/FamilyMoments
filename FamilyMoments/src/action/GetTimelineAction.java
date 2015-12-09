@@ -48,6 +48,9 @@ public class GetTimelineAction implements Action{
 			jsonArray.put(map);
 		}
 		result = jsonArray.toString();
+
+		System.out.println("test vcs");
+
 		return SUCCESS;
 	}
 }
