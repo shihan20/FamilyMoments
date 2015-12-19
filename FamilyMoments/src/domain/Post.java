@@ -1,6 +1,5 @@
 package domain;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +19,7 @@ public class Post {
 	@JoinTable(name="post_like_user",
 			joinColumns=@JoinColumn(name="post_id", referencedColumnName="post_id"),
 			inverseJoinColumns=@JoinColumn(name="like_user_id", referencedColumnName="user_id"))
-	private Set<User> likes;
+	private List<User> likes = new ArrayList<User>();
 	@OneToMany(targetEntity=Comment.class, mappedBy="post")
 	private Set<Comment> comments;
 	public Integer getId() {
@@ -47,12 +46,15 @@ public class Post {
 	public void setPublisher(User publisher) {
 		this.publisher = publisher;
 	}
-	public Set<User> getLikes() {
+
+	public List<User> getLikes() {
 		return likes;
 	}
-	public void setLikes(Set<User> likes) {
+
+	public void setLikes(List<User> likes) {
 		this.likes = likes;
 	}
+
 	public Set<Comment> getComments() {
 		return comments;
 	}

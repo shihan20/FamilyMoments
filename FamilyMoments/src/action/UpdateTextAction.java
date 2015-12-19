@@ -25,9 +25,8 @@ public class UpdateTextAction implements Action{
 	}
 
 	public String execute() throws Exception{
-
-		System.out.println(text);
-		postsService.updateTextPost(text, 1);
+		if (text != "")
+			postsService.updateTextPost(text, 1);
 		return SUCCESS;
 	}
 }

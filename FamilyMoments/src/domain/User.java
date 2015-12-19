@@ -15,6 +15,7 @@ public class User {
 	@OneToMany(targetEntity=Comment.class, mappedBy="at")
 	private Set<Comment> ateds;
 	private String name;
+	private String profile_picture;
 	@ManyToMany(targetEntity=User.class)
 	@JoinTable(name="user_friends",
 			joinColumns=@JoinColumn(name="user_id", referencedColumnName="user_id"),
@@ -58,5 +59,17 @@ public class User {
 
 	public void setFriends(Set<User> friends) {
 		this.friends = friends;
+	}
+
+	public String getProfile_picture() {
+		return profile_picture;
+	}
+
+	public void setProfile_picture(String profile_picture) {
+		this.profile_picture = profile_picture;
+	}
+
+	public User() {
+		profile_picture = "img/profile_picture_" + id + ".jpg";
 	}
 }

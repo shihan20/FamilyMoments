@@ -27,6 +27,9 @@
 		
 	<bean id="getTimelineAction" class="action.GetTimelineAction" scope="prototype"
 		p:postsService-ref="postsService" />
+
+	<bean id="likeAction" class="action.LikeAction" scope="prototype"
+		  p:postsService-ref="postsService" />
 		
 	<bean class="TestListener"
 		p:commentDao-ref="commentDao"

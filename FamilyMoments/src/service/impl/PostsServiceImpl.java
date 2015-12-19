@@ -66,4 +66,29 @@ public class PostsServiceImpl implements PostsService{
 			System.out.println(e);
 		}
 	}
+
+	public void likePost(int userid, int postid) {
+		User user = userDao.get(User.class, userid);
+		Post post = postDao.get(Post.class, postid);
+		post.getLikes().add(user);
+		postDao.update(post);
+	}
+
+	public void cancelLikePost(int userid, int postid) {
+		User user = userDao.get(User.class, userid);
+		Post post = postDao.get(Post.class, postid);
+
+		List<User> likes = post.getLikes();
+		for (int i=0; i<likes.size(); i++) {
+			if (likes.get(i).getId() == userid)
+				likes.remove(i);
+		}
+		System.out.println(post.getLikes());
+		postDao.update(post);
+	}
+
+	public List<User> getLikes(int postid) {
+		Post post = postDao.get(Post.class, postid);
+		return post.getLikes();
+	}
 }
