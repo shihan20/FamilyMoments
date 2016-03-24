@@ -53,3 +53,13 @@ function like(id) {
     }
     xhr.send(null);
 }
+
+$('#img-tab').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+})
+
+$('#text-tab').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+})

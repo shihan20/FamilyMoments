@@ -24,7 +24,7 @@ public class UpdateTextAction implements Action{
 		this.postsService = postsService;
 	}
 
-	public String execute() throws Exception{
+	public String execute() throws Exception {
 		if (text != "")
 			postsService.updateTextPost(text, 1);
 		return SUCCESS;

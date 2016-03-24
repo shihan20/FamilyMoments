@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +66,25 @@ public class PostsServiceImpl implements PostsService{
 			System.out.println("there is a hibernate exception");
 			System.out.println(e);
 		}
+	}
+
+	public void updateImgPost(String text, String savePath, int userid) {
+		Post post = new Post();
+		Date date = new Date();
+		post.setDate(date);
+		User user = userDao.get(User.class, userid);
+		post.setPublisher(user);
+
+		//ArrayList is designed to store a number of images' URLs. ONLY support one single img for now.
+		ImgContent content = new ImgContent();
+		content.setText(text);
+		ArrayList<String> a = new ArrayList<String>();
+		a.add(savePath);
+		content.setImgUrls(a);
+		contentDao.save(content);
+		post.setContent(content);
+
+		postDao.save(post);
 	}
 
 	public void likePost(int userid, int postid) {

@@ -24,6 +24,9 @@
 		
 	<bean id="updateTextAction" class="action.UpdateTextAction" scope="prototype"
 		p:postsService-ref="postsService" />
+
+	<bean id="updateImgAction" class="action.UpdateImgAction" scope="prototype"
+		  p:postsService-ref="postsService"/>
 		
 	<bean id="getTimelineAction" class="action.GetTimelineAction" scope="prototype"
 		p:postsService-ref="postsService" />

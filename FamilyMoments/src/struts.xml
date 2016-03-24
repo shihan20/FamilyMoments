@@ -26,9 +26,14 @@
 		</action>
 		
 		<action name="UpdateTextAction" class="updateTextAction">
-			<result name="success" type="redirect">/</result>
+			<result name="success" type="redirect">/index</result>
 		</action>
-		
+
+		<action name="UpdateImgAction" class="updateImgAction">
+			<param name="savePath">/uploadFiles</param>
+			<result name="success" type="redirect">/index</result>
+		</action>
+
 		<action name="GetTimelineAction" class="getTimelineAction">
 			<result type="json">
 				<param name="root">result</param>
@@ -39,6 +44,10 @@
 			<result type="json">
 				<param name="root">result</param>
 			</result>
+		</action>
+
+		<action name="*">
+			<result>/WEB-INF/content/{1}.jsp</result>
 		</action>
 
 	</package>
