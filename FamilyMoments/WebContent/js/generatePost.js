@@ -27,8 +27,15 @@ function generate(json, username) {
                                 <div class=\"col-xs-12\">" +
                                     post.text +
                                     "</div>\
-                                    </div>\
-                                    <div class=\"row\" style=\"padding:5px\">\
+                                    </div>"
+        if (post.image != null) {
+            html += "<div class=\"row\" style=\"padding:5px 5px 0px 5px\">\
+                                <div class=\"col-xs-12\">" +
+                    "<img src=\"" + post.image + "\" class=\"img-thumbnail\">\
+                </div>\
+                </div>"
+        }
+        html += "<div class=\"row\" style=\"padding:5px\">\
                                         <div class=\"col-xs-2\">\
                                             <button type=\"button\" id=\"button_like_" + post.id + "\" onclick=\"like(" + post.id + ")\" class=\"btn btn-default btn-sm\" aria-label=\"Left Align\" style=\"border:0px\">\
                                                 <span class=\"glyphicon glyphicon-heart-empty\"></span>\

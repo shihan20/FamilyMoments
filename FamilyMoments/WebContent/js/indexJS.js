@@ -11,9 +11,9 @@ $(document).ready(function(){
 });
 $(function(){
     $(window).scroll(function() {
-        //当内容滚动到底部时加载新的内容
+        //when the page is scrolling down to the bottom, loading more contents
         if ($(this).scrollTop() + $(window).height() + 20 >= $(document).height() && $(this).scrollTop() > 20) {
-            //当前要加载的页码
+            //the page is loading
             if (flag == 1)
                 return;
             loadPage(currPage);
@@ -21,6 +21,7 @@ $(function(){
         }
     });
 });
+
 function loadPage(currPage) {
     $.getJSON("/FamilyMoments/GetTimelineAction?page="+currPage.toString(), function(result){
         var json = JSON.parse(result);
@@ -29,14 +30,15 @@ function loadPage(currPage) {
         generate(result, "Henry");
     });
 }
+
 function checkUpdateTextIsEmpty() {
     var text = document.getElementById("updateText").value;
     if (text == "") {
         return false;
     }
 }
+
 function like(id) {
-    //alert("hit like!");
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {

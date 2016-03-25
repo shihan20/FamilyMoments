@@ -107,6 +107,7 @@ public class UpdateImgAction implements Action {
         StringBuffer abstractSavePath = new StringBuffer(savePath);
         abstractSavePath.append("/").append(c.get(Calendar.YEAR)).append("/").append(c.get(Calendar.MONTH)).append("/").append(c.get(Calendar.DATE)).append("/")
             .append(fileNameBuffer.toString());
+        abstractSavePath.deleteCharAt(0);
         return abstractSavePath.toString();
     }
 }
