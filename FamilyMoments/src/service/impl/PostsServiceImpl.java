@@ -12,9 +12,15 @@ import org.hibernate.SessionFactory;
 import java.text.SimpleDateFormat;
 import dao.*;
 import dao.impl.UserDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.PostsService;
 import domain.*;
 
+@Service
+@Transactional
 public class PostsServiceImpl implements PostsService{
 	private CommentDao commentDao;
 	private ContentDao contentDao;
@@ -23,21 +29,27 @@ public class PostsServiceImpl implements PostsService{
 	private UserDao userDao;
 	private VideoContentDao videoContentDao;
 
+	@Autowired
 	public void setCommentDao(CommentDao commentDao) {
 		this.commentDao = commentDao;
 	}
+	@Autowired
 	public void setContentDao(ContentDao contentDao) {
 		this.contentDao = contentDao;
 	}
+	@Autowired
 	public void setImgContentDao(ImgContentDao imgContentDao) {
 		this.imgContentDao = imgContentDao;
 	}
+	@Autowired
 	public void setPostDao(PostDao postDao) {
 		this.postDao = postDao;
 	}
+	@Autowired
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+	@Autowired
 	public void setVideoContentDao(VideoContentDao videoContentDao) {
 		this.videoContentDao = videoContentDao;
 	}

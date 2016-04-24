@@ -4,7 +4,7 @@
 var currPage = 0;
 var flag = 0;
 $(document).ready(function(){
-    $.getJSON("/FamilyMoments/GetTimelineAction?page="+currPage.toString(), function(result){
+    $.getJSON("/FamilyMoments/getTimeline?page="+currPage.toString(), function(result){
         generate(result, "Henry");
     });
     currPage++;
@@ -23,8 +23,8 @@ $(function(){
 });
 
 function loadPage(currPage) {
-    $.getJSON("/FamilyMoments/GetTimelineAction?page="+currPage.toString(), function(result){
-        var json = JSON.parse(result);
+    $.getJSON("/FamilyMoments/getTimeline?page="+currPage.toString(), function(result){
+        var json = result;
         if (json.length<10)
             flag=1;
         generate(result, "Henry");
@@ -48,10 +48,10 @@ function like(id) {
         }
     };
     if (document.getElementById("button_like_"+id).firstElementChild.className == "glyphicon glyphicon-heart") {
-        xhr.open("get", "/FamilyMoments/LikeAction?cancel=1&userid=1&postid="+id, true)
+        xhr.open("get", "/FamilyMoments/like?cancel=1&userid=1&postid="+id, true)
     }
     else {
-        xhr.open("get", "/FamilyMoments/LikeAction?cancel=0&userid=1&postid="+id, true);
+        xhr.open("get", "/FamilyMoments/like?cancel=0&userid=1&postid="+id, true);
     }
     xhr.send(null);
 }

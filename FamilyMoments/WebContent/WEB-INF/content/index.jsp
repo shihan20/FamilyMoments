@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
@@ -35,7 +34,7 @@
                                                 <div class="col-xs-2">
                                                     <img src="img/profile_picture_1.jpg" alt="Responsive image" class="img-circle img-responsive">
                                                 </div>
-                                                    <s:form class="col-md-10 col-sm-10 col-xs-10" onsubmit="return checkUpdateTextIsEmpty()" action="UpdateTextAction">
+                                                    <form class="col-md-10 col-sm-10 col-xs-10" onsubmit="return checkUpdateTextIsEmpty()" action="updateText" method="post">
                                                         <div class="row">
                                                             <div class="col-xs-12">
                                                                 <textarea name="text" class="form-control" id="updateText" placeholder="分享新鲜事"></textarea>
@@ -46,7 +45,7 @@
                                                                 <input type="submit" value="发布"  class="btn btn-primary"/>
                                                             </div>
                                                         </div>
-                                                    </s:form>
+                                                    </form>
                                             </div>
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="imgtab">
@@ -56,7 +55,7 @@
                                                 </div>
                                                 <div class="col-md-10 col-sm-10 col-xs-10">
 
-                                                    <s:form action="UpdateImgAction" enctype="multipart/form-data">
+                                                    <form action="updateImg" enctype="multipart/form-data" method="post">
                                                     <div class="row">
                                                         <div class="col-xs-12">
                                                                 <div class="row"><textarea name="text" class="form-control" placeholder="分享新鲜事"></textarea></div>
@@ -69,17 +68,17 @@
                                                             </div>
                                                             <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                                                             <div>
-                                                                <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="upload"></span>
+                                                                <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="uploadPic" accept="image/gif, image/png, image/jpeg"></span>
                                                                 <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                         <div class="row">
                                                             <div class="col-xs-2 col-xs-offset-9">
-                                                                <s:submit value="发布"  class="btn btn-primary"/>
+                                                                <input type="submit" value="发布"  class="btn btn-primary"/>
                                                             </div>
                                                         </div>
-                                                    </s:form>
+                                                    </form>
 
                                                 </div>
                                             </div>

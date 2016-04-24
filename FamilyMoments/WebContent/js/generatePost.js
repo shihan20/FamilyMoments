@@ -1,9 +1,10 @@
 
 function generate(json, username) {
-	var posts = JSON.parse(json);
+	var posts = json;
 	for (var i=0; i<posts.length; i++) {
 	    var post = posts[i];
 	    var date = processDate(new Date(post.date));
+        
         var html = "<div id=\"post_" + post.id + "\" class=\"panel panel-default\">\
                         <div class=\"panel-body\">\
                             <div class=\"row\" style=\"padding:5px\">\
@@ -17,7 +18,7 @@ function generate(json, username) {
                                         "</div>\
                                     </div>\
                                     <div class=\"row\">\
-                                        <div class=\"col-xs-12\">" + 
+                                        <div class=\"col-xs-12\">" +
                                             date +
                                         "</div>\
                                     </div>\
@@ -50,6 +51,7 @@ function generate(json, username) {
                                         </div>\
                                     </div>"
         $("#posts").append(html);
+
         if (post.likes != "[]") {
             generateLikes(post.likes, post.id, username);
         }
@@ -109,7 +111,7 @@ function generateLikes(json_likes, postid, username) {
         div_likes_row.appendChild(div_likes_col);
     }
 
-    var likes = JSON.parse(json_likes);
+    var likes = json_likes;
 
     var string = "";
     var FLAG_I_LIKE_THIS = false;

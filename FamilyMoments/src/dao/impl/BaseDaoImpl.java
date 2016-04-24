@@ -1,29 +1,24 @@
 package dao.impl;
 
 import org.hibernate.*;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.io.Serializable;
 
 import dao.*;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Description:
- * <br/>网站: <a href="http://www.crazyit.org">疯狂Java联盟</a>
- * <br/>Copyright (C), 2001-2016, Yeeku.H.Lee
- * <br/>This program is protected by copyright laws.
- * <br/>Program Name:
- * <br/>Date:
- * @author Yeeku.H.Lee kongyeeku@163.com
- * @version 1.0
- */
+@Repository
 @Transactional
 public class BaseDaoImpl<T> implements BaseDao<T>
 {
 	// DAO组件进行持久化操作底层依赖的SessionFactory组件
 	private SessionFactory sessionFactory;
 	// 依赖注入SessionFactory所需的setter方法
+	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory)
 	{
 		this.sessionFactory = sessionFactory;
