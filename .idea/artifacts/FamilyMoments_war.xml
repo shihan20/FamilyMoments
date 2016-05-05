@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="FamilyMoments:war">
+    <output-path>$PROJECT_DIR$/FamilyMoments/target</output-path>
+    <root id="archive" name="FamilyMoments-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="FamilyMoments:war exploded" />
+    </root>
+  </artifact>
+</component>
