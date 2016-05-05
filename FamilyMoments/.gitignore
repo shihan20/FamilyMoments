@@ -1,1 +1,5 @@
 /build/
+/target/
+/FamilyMoments.eml
+/FamilyMoments.iml
+.gitignore
