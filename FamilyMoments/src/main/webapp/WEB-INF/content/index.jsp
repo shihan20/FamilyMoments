@@ -1,3 +1,4 @@
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,7 +17,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>title</title>
     </head>
-    <body style="background-color:rgb(245,248,250);">
+    <body style="background-color:rgb(245,248,250); padding-top: 70px;">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand navbar-left" href="#">
+                    Hello ${username}.
+                </a>
+            </div>
+            <form method="post" class="navbar-form navbar-right" action="logout">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <input type="submit" value="Logout"  class="btn btn-default"/>
+            </form>
+        </div>
+    </nav>
+
         <div class="container">
             <div class="row">
                 <div id="posts" class="col-md-6 col-sm-12 col-xs-12">
@@ -32,7 +48,7 @@
                                         <div role="tabpanel" class="tab-pane fade in active" id="texttab">
                                             <div class="row" style="padding:5px">
                                                 <div class="col-xs-2">
-                                                    <img src="img/profile_picture_1.jpg" alt="Responsive image" class="img-circle img-responsive">
+                                                    <img src=${profile_picture} alt="Responsive image" class="img-circle img-responsive">
                                                 </div>
                                                     <form class="col-md-10 col-sm-10 col-xs-10" onsubmit="return checkUpdateTextIsEmpty()" action="updateText" method="post">
                                                         <div class="row">
@@ -42,6 +58,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xs-2 col-xs-offset-9">
+                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                                                 <input type="submit" value="发布"  class="btn btn-primary"/>
                                                             </div>
                                                         </div>
@@ -51,7 +68,7 @@
                                         <div role="tabpanel" class="tab-pane fade" id="imgtab">
                                             <div class="row" style="padding:5px">
                                                 <div class="col-xs-2">
-                                                    <img src="img/profile_picture_1.jpg" alt="Responsive image" class="img-circle img-responsive">
+                                                    <img src=${profile_picture} alt="Responsive image" class="img-circle img-responsive">
                                                 </div>
                                                 <div class="col-md-10 col-sm-10 col-xs-10">
 
@@ -75,6 +92,7 @@
                                                     </div>
                                                         <div class="row">
                                                             <div class="col-xs-2 col-xs-offset-9">
+                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                                                 <input type="submit" value="发布"  class="btn btn-primary"/>
                                                             </div>
                                                         </div>

@@ -48,10 +48,10 @@ function like(id) {
         }
     };
     if (document.getElementById("button_like_"+id).firstElementChild.className == "glyphicon glyphicon-heart") {
-        xhr.open("get", "like?cancel=1&userid=1&postid="+id, true)
+        xhr.open("get", "like?cancel=1&postid="+id, true)
     }
     else {
-        xhr.open("get", "like?cancel=0&userid=1&postid="+id, true);
+        xhr.open("get", "like?cancel=0&postid="+id, true);
     }
     xhr.send(null);
 }
