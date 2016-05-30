@@ -2,7 +2,6 @@ package security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -20,7 +19,7 @@ public class FmUserDetails extends User {
         this.id = id;
     }
 
-    public FmUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, int id){
+    public FmUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, int id) {
         super(username, password, authorities);
         setId(id);
     }

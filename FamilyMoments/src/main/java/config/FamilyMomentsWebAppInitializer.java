@@ -14,23 +14,23 @@ import javax.servlet.ServletRegistration;
 public class FamilyMomentsWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected String[] getServletMappings() {
-        return new String[] { "/" };
+        return new String[]{"/"};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] { WebConfig.class };
+        return new Class<?>[]{WebConfig.class};
     }
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { RootConfig.class, SecurityConfig.class };
+        return new Class<?>[]{RootConfig.class, SecurityConfig.class};
     }
 
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[] { new OpenSessionInViewFilter() };
-    }
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        return new Filter[]{new OpenSessionInViewFilter()};
+//    }
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
