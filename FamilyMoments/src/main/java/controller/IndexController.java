@@ -1,6 +1,6 @@
 package controller;
 
-import dao.UserDao;
+import data.DataMapper;
 import domain.ImgContent;
 import domain.Post;
 import domain.User;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import service.PostsService;
 import security.FmUserDetails;
+import service.PostsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -24,34 +24,30 @@ import java.util.*;
 
 @Controller
 public class IndexController {
+    @Autowired
     private PostsService postsService;
 
     @Autowired
-    private UserDao userDao;
+    private DataMapper dataMapper;
 
-    @Autowired
-    public void setPostsService(PostsService postsService) {
-        this.postsService = postsService;
-    }
-
-    private int getCurrUserId(){
+    private int getCurrUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof FmUserDetails)
-            return ((FmUserDetails)principal).getId();
+        if (principal instanceof FmUserDetails)
+            return ((FmUserDetails) principal).getId();
         return -1;
     }
 
     @RequestMapping(value = "/")
     public String index(Model model) {
         int currUserId = getCurrUserId();
-        User currUser = userDao.get(User.class, currUserId);
+        User currUser = dataMapper.selectUserById(currUserId);
         model.addAttribute("username", currUser.getName());
         model.addAttribute("profile_picture", currUser.getProfile_picture());
         return "index";
     }
 
     @RequestMapping(value = "/updateText", method = RequestMethod.POST)
-    public String updateText(@RequestParam String text) throws Exception{
+    public String updateText(@RequestParam String text) throws Exception {
         System.out.println(text);
         if (text != "")
             postsService.updateTextPost(text, getCurrUserId());
@@ -59,7 +55,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/updateImg", method = RequestMethod.POST)
-    public String updateImg(@RequestParam(defaultValue = "") String text, @RequestPart MultipartFile uploadPic, HttpServletRequest request){
+    public String updateImg(@RequestParam(defaultValue = "") String text, @RequestPart MultipartFile uploadPic, HttpServletRequest request) {
         //get current date and make new directory such as "/savePath/YEAR/MONTH/DATE"
         Calendar c = Calendar.getInstance();
         //generate unique filename to save file
@@ -74,15 +70,13 @@ public class IndexController {
         File dir = new File(absoluteDirPath);
         if (!dir.exists())
             dir.mkdirs();
-//        System.out.println(dir.getAbsolutePath());
 
         File file = new File(absoluteFilePath);
-//        System.out.println(file.getAbsolutePath());
         try {
             if (!file.exists())
                 file.createNewFile();
             uploadPic.transferTo(file);
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -91,8 +85,10 @@ public class IndexController {
     }
 
     @RequestMapping(value = "getTimeline", method = RequestMethod.GET)
-    public @ResponseBody List<Map> getTimeline(@RequestParam int page) {
-        List<Post> posts = postsService.getTimeline(getCurrUserId(), 10*page, 10);
+    public
+    @ResponseBody
+    List<Map> getTimeline(@RequestParam int page) {
+        List<Post> posts = postsService.getTimeline(getCurrUserId(), 10 * page, 10);
         List<Map> result = new ArrayList<>();
         for (Post post : posts) {
             Map map = new HashMap();
@@ -102,7 +98,7 @@ public class IndexController {
             map.put("date", post.getDate().getTime());
             map.put("text", post.getContent().getText());
             if (post.getContent() instanceof ImgContent)
-                map.put("image", ((ImgContent)post.getContent()).getImgUrls());
+                map.put("image", ((ImgContent) post.getContent()).getImgUrls());
             List<User> likes = post.getLikes();
             List like_users = new ArrayList<>();
             for (User like_user : likes) {
@@ -117,14 +113,16 @@ public class IndexController {
     }
 
     @RequestMapping(value = "like", method = RequestMethod.GET)
-    public @ResponseBody List<Map> like(@RequestParam int postid, @RequestParam int cancel){
-        if(cancel == 0)
+    public
+    @ResponseBody
+    List<Map> like(@RequestParam int postid, @RequestParam int cancel) {
+        if (cancel == 0)
             postsService.likePost(getCurrUserId(), postid);
         else
             postsService.cancelLikePost(getCurrUserId(), postid);
         List<User> likes = postsService.getLikes(postid);
         List<Map> result = new ArrayList<Map>();
-        for (User like_user: likes) {
+        for (User like_user : likes) {
             Map map = new HashMap<>();
             map.put("username", like_user.getName());
             result.add(map);

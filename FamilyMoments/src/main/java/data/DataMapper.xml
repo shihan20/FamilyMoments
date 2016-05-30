@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="data.DataMapper">
+    <select id="selectUserById" resultMap="userResultMap">
+        select *
+        from User
+        where user_id = #{id}
+    </select>
+
+    <select id="selectUserByName" resultMap="userResultMap">
+        select *
+        from User
+        where name = #{name}
+    </select>
+
+    <select id="selectUserFriends" resultMap="userResultMap">
+        select *
+        from User
+        where user_id in (select friends_id
+        from user_friends
+        where user_id = #{id})
+    </select>
+
+    <select id="selectUserFeedPosts" resultMap="postResultMap">
+        select Post.post_id,
+        Post.date,
+        Content.content_id,
+        Content.text,
+        Content.DTYPE,
+        Content.imgUrls,
+        User.user_id as publisher_user_id,
+        User.name as publisher_name,
+        User.profile_picture as publisher_profile_picture,
+        User.password as publisher_password
+        from Post, Content, User
+        where Post.content_id = Content.content_id
+        and Post.publisher_user_id = User.user_id
+        and (Post.publisher_user_id = #{id} or
+        Post.publisher_user_id in ( select friends_id
+        from user_friends
+        where user_id = #{id}))
+        order by Post.date desc
+    </select>
+
+    <select id="selectLikeUsers" resultMap="userResultMap">
+        select User.user_id, User.name, User.profile_picture, User.password
+        from User, post_like_user
+        where post_like_user.post_id = #{id} and like_user_id = User.user_id
+    </select>
+
+    <select id="selectPostById" resultMap="postResultMap">
+        select Post.post_id,
+        Post.date,
+        Content.content_id,
+        Content.text,
+        Content.DTYPE,
+        User.user_id as publisher_user_id,
+        User.name as publisher_name,
+        User.profile_picture as publisher_profile_picture,
+        User.password as publisher_password
+        from Post, Content, User
+        where post_id = #{id}
+    </select>
+
+    <insert id="insertTextContent" useGeneratedKeys="true" keyProperty="id">
+        insert into Content (DTYPE, text) values ('text_content', #{text});
+    </insert>
+
+    <insert id="insertTextPost" useGeneratedKeys="true">
+        insert into Post(date, content_id, publisher_user_id) values (#{date}, #{content_id}, #{publisher_id});
+    </insert>
+
+    <insert id="insertImgContent" useGeneratedKeys="true" keyProperty="id">
+        insert into Content (DTYPE, text, imgUrls) values ('image_content', #{text}, #{imgUrls});
+    </insert>
+
+    <insert id="insertImgPost" useGeneratedKeys="true">
+        insert into Post(date, content_id, publisher_user_id) values (#{date}, #{content_id}, #{publisher_id});
+    </insert>
+
+    <insert id="insertPostLikes">
+        insert into post_like_user values (#{post_id}, #{like_user_id})
+    </insert>
+
+    <delete id="deletePostLikes">
+        delete from post_like_user where post_id = #{post_id} and like_user_id = #{like_user_id}
+    </delete>
+
+    <resultMap id="postResultMap" type="post">
+        <id property="id" column="post_id"/>
+        <result property="date" column="date"/>
+        <association property="content" column="content_id" javaType="content" resultMap="contentResultMap"/>
+        <association property="publisher" column="publisher_user_id" javaType="user" resultMap="userResultMap"
+                     columnPrefix="publisher_"/>
+        <collection property="likes" ofType="user" column="post_id" select="selectLikeUsers"/>
+    </resultMap>
+
+    <resultMap id="contentResultMap" type="content">
+        <id property="id" column="content_id"/>
+        <result property="text" column="text"/>
+        <discriminator javaType="String" column="DTYPE">
+            <case value="image_content" resultType="imgContent">
+                <result property="imgUrls" column="imgUrls"/>
+            </case>
+        </discriminator>
+    </resultMap>
+
+    <resultMap id="userResultMap" type="user">
+        <id property="id" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="profile_picture" column="profile_picture"/>
+        <result property="password" column="password"/>
+    </resultMap>
+</mapper>

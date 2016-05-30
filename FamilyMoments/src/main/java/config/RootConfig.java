@@ -1,22 +1,23 @@
 package config;
 
+import data.DataMapper;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.DataSourceFactory;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.Properties;
 
 /**
  * Created by shihan on 16/4/16.
  */
 @Configuration
-@ComponentScan({ "dao", "service"})
+@ComponentScan({"service", "data"})
 public class RootConfig {
     @Bean
     public DataSource dataSource() {
@@ -26,16 +27,24 @@ public class RootConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
-        LocalSessionFactoryBean sfb = new LocalSessionFactoryBean();
-        sfb.setDataSource(dataSource);
-        sfb.setPackagesToScan(new String[] { "domain" });
-        Properties props = new Properties();
-        props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-        props.setProperty("hibernate.current_session_context_class", "thread");
-        props.setProperty("hibernate.enable_lazy_load_no_trans", "true");
-        props.setProperty("hibernate.hbm2ddl.auto", "update");
-        sfb.setHibernateProperties(props);
-        return sfb;
+    public DataSourceTransactionManager transactionManager(DataSource dataSource){
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        return transactionManager;
+    }
+
+    @Bean
+    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) {
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dataSource);
+        sqlSessionFactory.setConfigLocation(new ClassPathResource("/data/mybatis-config.xml"));
+        return sqlSessionFactory;
+    }
+
+    @Bean
+    public MapperFactoryBean dataMapper(SqlSessionFactory sqlSessionFactory) {
+        MapperFactoryBean dataMapper = new MapperFactoryBean();
+        dataMapper.setMapperInterface(DataMapper.class);
+        dataMapper.setSqlSessionFactory(sqlSessionFactory);
+        return dataMapper;
     }
 }
